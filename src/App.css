@@ -2,9 +2,13 @@
   text-align: center;
   background-color: #67AAF9;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-header {
+  min-width: 100%;
   background-color: #A53860;
   min-height: 10vh;
   display: flex;
