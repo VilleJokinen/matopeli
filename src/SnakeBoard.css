@@ -1,4 +1,5 @@
 .Snake-board {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,8 +10,8 @@
 .Snake-row {
   display: flex;
   flex-direction: row;
-
 }
+
 .tile {
   width: 25px;
   height: 25px;
@@ -22,5 +23,23 @@
 }
 
 .snake {
-  background: red;
+  background: green;
+}
+
+.food {
+  background: pink;
+}
+
+.food::after {
+  content: "🍎";
+}
+
+.Game-over {
+  position: absolute;
+  font-family: 'Hanalei Fill', cursive;
+  font-size: 50px;
+  color: red;
+  background-color: aqua;
+  font-weight: bold;
+  padding: 10px;
 }
