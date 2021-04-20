@@ -130,7 +130,7 @@ const SnakeBoard = ({points, setPoints}) => {
       // Lisää pisteet local storageen tulostaulukkoa varten
       // HUOM! Local storage hyväksyy vain JSON:ia
       const pointsList = JSON.parse(localStorage.getItem("snake-points")) || [];
-      pointsList.push(points);
+      pointsList.push({name: "Ville", pounts});
       localStorage.setItem("snake-points", JSON.stringify(pointsList));
       window.dispatchEvent(new Event("storage"));
     }
