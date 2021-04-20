@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/matopeli/static/css/main.57356d50.chunk.css",
+    "main.js": "/matopeli/static/js/main.2bbd2242.chunk.js",
+    "main.js.map": "/matopeli/static/js/main.2bbd2242.chunk.js.map",
+    "runtime-main.js": "/matopeli/static/js/runtime-main.b82dfabb.js",
+    "runtime-main.js.map": "/matopeli/static/js/runtime-main.b82dfabb.js.map",
+    "static/js/2.0bdb75d6.chunk.js": "/matopeli/static/js/2.0bdb75d6.chunk.js",
+    "static/js/2.0bdb75d6.chunk.js.map": "/matopeli/static/js/2.0bdb75d6.chunk.js.map",
+    "index.html": "/matopeli/index.html",
+    "static/css/main.57356d50.chunk.css.map": "/matopeli/static/css/main.57356d50.chunk.css.map",
+    "static/js/2.0bdb75d6.chunk.js.LICENSE.txt": "/matopeli/static/js/2.0bdb75d6.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b82dfabb.js",
+    "static/js/2.0bdb75d6.chunk.js",
+    "static/css/main.57356d50.chunk.css",
+    "static/js/main.2bbd2242.chunk.js"
+  ]
+}
