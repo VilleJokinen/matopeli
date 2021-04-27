@@ -23,3 +23,5 @@ export const useInterval = (callback, delay) => {
     }
   }, [delay]);
 };
+
+export const range = number => [...Array(Math.round(number)).keys()];

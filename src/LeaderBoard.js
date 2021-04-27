@@ -17,7 +17,8 @@ const LeaderBoard = () => {
     <div className="LeaderBoard">
       <div className="LeaderBoard-header">Top 5</div>
       <div className="LeaderBoard-points">
-        {PointsList.sort((a, b) => b.points - a.points)
+        {pointsList
+          .sort((a, b) => b.points - a.points)
           .slice(0, 5)
           .map((points, i) => (
             <div key={`${points.points}-${i}`}>

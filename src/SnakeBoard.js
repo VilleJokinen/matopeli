@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useInterval} from "./utils";
+import {useInterval, range} from "./utils";
 import "./SnakeBoard.css";
 
 const SnakeBoard = ({points, setPoints}) => {
@@ -22,6 +22,27 @@ const SnakeBoard = ({points, setPoints}) => {
     }
   }
 
+  const obstacles = [
+    {name: "tyhjä", location: []},
+    {
+      name: "keski",
+      location: range(width * 0.6).map(y => ({
+        x: Math.round(height / 2),
+        y: y + Math.ceil(width * 0.2)
+      }))
+    },
+    {
+      name: "reunat",
+      location: [
+        ...range(width).map(x => ({x, y: 0})),
+        ...range(width).map(x => ({x, y: height - 1})),
+        ...range(height).map(y => ({x: 0, y})),
+        ...range(height).map(y => ({x: height - 1, y}))
+      ]
+    }
+  ];
+  const randomObstacle = () =>
+    obstacles[Math.floor(Math.random() * obstacles.lenght)];
   // Satunnainen sijainti x ja y -koordinaatistossa
   const randomPosition = () => {
     const position = {
@@ -130,7 +151,8 @@ const SnakeBoard = ({points, setPoints}) => {
       // Lisää pisteet local storageen tulostaulukkoa varten
       // HUOM! Local storage hyväksyy vain JSON:ia
       const pointsList = JSON.parse(localStorage.getItem("snake-points")) || [];
-      pointsList.push({name: "Ville", pounts});
+      const name = prompt("Peli päättyi! Anna pelimerkkisi!");
+      pointsList.push({name, points});
       localStorage.setItem("snake-points", JSON.stringify(pointsList));
       window.dispatchEvent(new Event("storage"));
     }
@@ -155,6 +177,7 @@ const SnakeBoard = ({points, setPoints}) => {
   };
 
   // Käytetään kustomoitua intervalli-funktiota madon liikuttamiseen
+  console.log("Esteet:", obstacles);
   useInterval(moveSnake, 250, setIntervalId);
 
   return (
