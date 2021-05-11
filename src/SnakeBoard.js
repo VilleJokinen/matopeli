@@ -12,17 +12,23 @@ const SnakeBoard = ({points, setPoints}) => {
   ...
   */
 
-  const height = 10;
-  const width = 10;
-  var initialRows = [];
-  for (var i = 0; i < height; i++) {
-    initialRows[i] = [];
-    for (var j = 0; j < width; j++) {
-      initialRows[i][j] = "blank";
+  const [height, setHeight] = useState(
+    localStorage.getItem("snake-board-size") || 10
+  );
+  const [width, setWidth] = useState(
+    localStorage.getItem("snake-board-size") || 10
+  );
+  const getInitialRows = () => {
+    var initialRows = [];
+    for (var i = 0; i < height; i++) {
+      initialRows[i] = [];
+      for (var j = 0; j < width; j++) {
+        initialRows[i][j] = "blank";
+      }
     }
-  }
-
-  const obstacles = [
+    return initialRows;
+  };
+  const getObstacles = () => [
     {name: "tyhjä", location: []},
     {
       name: "keski",
@@ -61,7 +67,7 @@ const SnakeBoard = ({points, setPoints}) => {
     }
   ];
   const randomObstacle = () =>
-    obstacles[Math.floor(Math.random() * obstacles.length)];
+    getObstacles()[Math.floor(Math.random() * getObstacles.length)];
   //     obstacles[Math.floor(Math.random() * obstacles.length)];
   // Satunnainen sijainti x ja y -koordinaatistossa
 
@@ -83,8 +89,9 @@ const SnakeBoard = ({points, setPoints}) => {
   komponenteissa. https://joinex.fi/react-pahkinankuoressa/
   */
   // Rows eli rivit merkitsee tässä pelilaudan rivejä
+
   const [obstacle] = useState(randomObstacle());
-  const [rows, setRows] = useState(initialRows);
+  const [rows, setRows] = useState(getInitialRows);
   // Lisätään mato. Mato on lista objekteja, joihin tallennetaan madon osien x ja y -sijainnit.
   // Alustetaan madon pään sijainniksi {x:0, y:0}
   const [snake, setSnake] = useState([{x: 1, y: 1}]);
@@ -95,6 +102,7 @@ const SnakeBoard = ({points, setPoints}) => {
   // Tallennetaan interval id stateen, jotta sen voi pelin loppuessa pysäyttää
   const [intervalId, setIntervalId] = useState();
   const [isGameOver, setIsGameOver] = useState(false);
+  const [startGame, setStartGame] = useState(false);
 
   const changeDirectionWithKeys = e => {
     var {keyCode} = e;
@@ -129,7 +137,7 @@ const SnakeBoard = ({points, setPoints}) => {
   // Asetetaan mato pelilaudalle madon x ja y -sijaintien mukaisesti
   // Asetetaan samalla myös ruoka pelilaudalle (x,y)
   const displaySnake = () => {
-    const newRows = initialRows;
+    const newRows = getInitialRows();
     snake.forEach(tile => {
       newRows[tile.x][tile.y] = "snake";
     });
@@ -155,6 +163,7 @@ const SnakeBoard = ({points, setPoints}) => {
 
   // Liikutetaan matoa haluttuun suuntaan
   const moveSnake = () => {
+    if (!startGame) return;
     const newSnake = [];
     switch (direction) {
       // Jakojäännös (%) tarkoittaa jakolaskussa yli jäävää kokonaislukua.
@@ -213,11 +222,35 @@ const SnakeBoard = ({points, setPoints}) => {
   };
 
   // Käytetään kustomoitua intervalli-funktiota madon liikuttamiseen
-  console.log("Esteet:", obstacles);
   useInterval(moveSnake, 250, setIntervalId);
 
   return (
     <div className="Snake-board">
+      {!startGame && (
+        <>
+          <div>Pelilaudan koko on nyt {width} ruutua.</div>
+          <div>Aseta halutessasi uusi pelilaudan koko:</div>
+          <input
+            className="Board-size"
+            placeholder="Koko 10-100"
+            type="number"
+            onChange={e => {
+              const size = e.target.value;
+              if (size <= 100 && size >= 10) {
+                console.log("OK", size);
+                setWidth(size);
+                setHeight(size);
+                localStorage.setItem("snake-board-size", size);
+              } else {
+                console.error("ei hyvä", size);
+              }
+            }}
+          />
+          <button className="Start-game" onClick={setStartGame}>
+            Aloita peli!
+          </button>
+        </>
+      )}
       {displayRows}
       {isGameOver && <div className="Game-over">Game over!</div>}
     </div>
